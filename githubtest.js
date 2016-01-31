@@ -41,10 +41,10 @@ setupGitID(function(){
 
 
 
-printPullRequests("ayushajain", "Butler");
+//printPullRequests("ayushajain", "Butler");
 
 function printPullRequests(user, repo){
-    console.log(github.pullRequests.getAll({user: user, repo: repo}, function(err, result){
+    github.pullRequests.getAll({user: user, repo: repo}, function(err, result){
         //console.log(result);
         var counter = 0;
 
@@ -67,11 +67,11 @@ function printPullRequests(user, repo){
             console.log("---------------------");
         }
         
-    }));
+    });
 }
 
 
-//printRepoInfo("ayushajain", "Butler");
+printRepoInfo("ayushajain", "Butler");
 
 function printRepoInfo(user, repo){
     github.repos.get({user: user, repo: repo}, function(err, result){
@@ -143,7 +143,7 @@ function printIssues(user, repo){
 
         var counter = 0
         ;
->>>>>>> test_branch
+
         while(true){
             //console.log("THE TITLE IS: " + the_title);
             var issue_object = result[counter];//["title"];
@@ -151,7 +151,7 @@ function printIssues(user, repo){
                 break;
             }else{
                 console.log("ISSUE #: " + (counter));
->>>>>>> test_branch
+
                 console.log("THE TITLE IS: " + issue_object["title"]);
                 console.log("THE BODY IS: " + issue_object["body"]);
                 console.log("THE USER IS: " + issue_object["user"]["login"]);
@@ -160,14 +160,14 @@ function printIssues(user, repo){
             }
 
             console.log("---------------------");
->>>>>>> test_branch
+
             counter += 1;
         }
         
     });
 }
 
->>>>>>> test_branch
+
 
 printPullRequests("ayushajain", "Butler");
 

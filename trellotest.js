@@ -10,20 +10,16 @@ printBoards();
 
 // URL arguments are passed in as an object. 
 function printBoards(){
-<<<<<<< HEAD
+
 
 	var associativeArray = {};
+	
+	//console.log(data);
 
 	t.get("/1/members/me", { boards: "open" }, function(err, data) {
 	  if (err) throw err;
 
 	  //console.log(data);
-=======
-	t.get("/1/members/me", { boards: "open" }, function(err, data) {
-	  if (err) throw err;
-
-	  console.log(data);
->>>>>>> test_branch
 
 	  var counter = 0;
 	  while(true){
@@ -32,7 +28,6 @@ function printBoards(){
 	  	}else{
 	  		console.log("----------------");
 	  		console.log("BOARD #" + counter + ": " + data["boards"][counter]["name"]);
-<<<<<<< HEAD
 	  		console.log("BOARD ID: " + data["boards"][counter]["id"]);
 	  		associativeArray[data["boards"][counter]["id"]] = data["boards"][counter]["name"];
 
@@ -53,8 +48,6 @@ function printBoards(){
 
 	  		});
 
-=======
->>>>>>> test_branch
 	  	}
 
 	  	counter++;
