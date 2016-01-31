@@ -1,1 +1,4 @@
-var wit = require('wit-ai');
+var wit = require('node-wit');
+
+
+ 
