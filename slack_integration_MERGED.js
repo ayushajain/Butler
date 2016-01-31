@@ -20,6 +20,8 @@ var WIT_TOKEN = 'FMRINOOR6JOXN5W3LWPGBKOPUQG5CILD'; //change
 var transporter = nodemailer.createTransport('smtps://butlerlahacks%40gmail.com:testpass@smtp.gmail.com'); //allow customization
 var slack = new Slack(SLACK_TOKEN, SLACK_AUTORECONNECT, SLACK_AUTOMARK);
 
+var global_key = "";
+
 slack.on('open', function() {
      var channels = ["general"];
      console.log("Connected to " + slack.team.name + " as @ " + slack.self.name);
@@ -143,6 +145,30 @@ function obeyCommand(text, channel, message) {
                               }
                          });
                          break;
+
+                    case "Cancel_Task":
+                         console.log(message.user);
+                         userRef.child('members').child(message.user).child('tasks').once('value',  function(snapshot) {
+                              var task = value["task"];
+                              var containsTask = snapshot.forEach(function(childSnapshot){
+                                   channel.send("Actual task: " + childSnapshot.val().task);
+                                   if(childSnapshot.val().task == task){
+                                       console.log("PARENT: " + JSON.stringify(childSnapshot.val()));
+                                       global_key = childSnapshot.key();
+                                       return true;
+                                   }
+                              });
+
+                              if(containsTask == true){
+                                   userRef.child('members').child(message.user).child('tasks').child(global_key).remove();
+                                   channel.send("Task removed!");
+                              }else{
+                                   channel.send("Sorry, that task does not exist.");
+                              }
+                              
+                         });
+                         break;    
+
                     case "List_Tasks":
                          var member = slack.getUserByName(value["member"]);
                          var output = "";
