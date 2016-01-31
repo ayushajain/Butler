@@ -1,7 +1,6 @@
 var prompt = require('prompt');
 var wit = require('node-wit');
 var open = require('open');
-var gi = require('github-issues');
 var nodemailer = require('nodemailer');
 
 var ACCESS_TOKEN = 'FMRINOOR6JOXN5W3LWPGBKOPUQG5CILD';
@@ -57,17 +56,3 @@ function obeyCommand(intent, value){
 		sendTheEmail(value, "test subject");
 	}
 }
-
-var config = {
-  'repo'       : 'ButlerLAHacks/Test',
-  'useragent'  : 'nejosephliu',
-  'accesstoken': '0e17a29b72a33ea4c99a8f9a5ae7f8e5c0b50425'
-};
- 
-gi.setConfig(config);
- 
-var issueStream = gi.fetchIssues('open|closed');
- 
-issueStream.on('_data', function (issue) {
-  console.log(issue);
-});
