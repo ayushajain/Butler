@@ -127,16 +127,14 @@ function obeyCommand(text, channel, message) {
 
                               if (snapshot.hasChild(team)) {
                                    task["creator"] = message.user;
-                                   try {
+                                   if(value["datetime"] != null){
                                         task["deadline"] = value["datetime"];
-                                   } catch (e) {
-                                        delete task["deadline"];
-                                   }
+                                   } 
                                    task["type"] = "user";
-                                   task["user"] = slack.getUserByID(team).name;
+                                   task["user"] = team;
                                    task["key"] = userRef.child('members').child(team).child('tasks').push(task);
-
                                    addTaskToGlobal(task);
+
                               } else {
                                    channel.send("Sorry that user does not exist.") // TODO: add suggestions for other people
                               }
@@ -159,7 +157,8 @@ function obeyCommand(text, channel, message) {
 
 
 function addTaskToGlobal(task) {
-
+     task.key = task.key.toString().replaceAll(".*/", "");
+    userRef.child('tasks').child(task.key).set(task);
 }
 
 String.prototype.replaceAll = function(search, replacement) {
