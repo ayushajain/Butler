@@ -41,11 +41,11 @@ setupGitID(function(){
 
 
 
-//printPullRequests("ayushajain", "Butler");
+printPullRequests("ayushajain", "Butler");
 
 function printPullRequests(user, repo){
     console.log(github.pullRequests.getAll({user: user, repo: repo}, function(err, result){
-        console.log(result);
+        //console.log(result);
         var counter = 0;
 
         console.log("---------------------");
@@ -56,6 +56,7 @@ function printPullRequests(user, repo){
                 break;
             }else{
                 console.log("PULL REQUEST #: " + counter);
+                console.log("PULL TITLE: " + pull_object["title"]);
                 console.log("PULL USER: " + pull_object["user"]["login"]);
                 console.log("PULL URL: " + pull_object["url"]);
                 console.log("PULLING FROM: " + pull_object["head"]["ref"]);
@@ -70,11 +71,11 @@ function printPullRequests(user, repo){
 }
 
 
-printRepoInfo("ayushajain", "Butler");
+//printRepoInfo("ayushajain", "Butler");
 
 function printRepoInfo(user, repo){
     github.repos.get({user: user, repo: repo}, function(err, result){
-        console.log(result);
+        //console.log(result);
 
         console.log("---------------------");
 
