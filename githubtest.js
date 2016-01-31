@@ -11,12 +11,9 @@ function setupGitID(callback){
             console.error(err);
         }
         the_token = data.toString();
-        console.log(the_token);
 
         callback();
     })
-
-
 }
 
 
@@ -36,25 +33,88 @@ var github = new GitHubApi({
 
 setupGitID(function(){
     github.authenticate({
-
         type: "oauth",
         token: the_token
-    //token: "0e17a29b72a33ea4c99a8f9a5ae7f8e5c0b50425"
-});
-
+        //token: "0e17a29b72a33ea4c99a8f9a5ae7f8e5c0b50425"
+    });
 })
 
-// console.log(github.issues.getAll({}, function(err, result){
-// 	console.log('The result is: ' + result);
-// }));
+
+
+
+
+
+console.log(github.pullRequests.get({user: "ayushajain", repo: "Butler", number: 1}, function(err, result){
+    console.log(result);
+}));
 
 
 /*console.log(github.repos.getCollaborators({user: "nejosephliu", repo: "Youth_Directory_Repo", number: 1}, function(err, result){
 	console.log(result);
 }));*/
 
-console.log(github.issues.getRepoIssue({user: "ayushajain", repo: "Butler", number: 1}, function(err, result){
-    console.log(result);
-}));
+// console.log(github.issues.getRepoIssue({user: "ayushajain", repo: "Butler", number: 1}, function(err, result){
+//     console.log("THE TITLE IS: " + result["title"]);
+//     console.log("THE BODY IS: " + result["body"]);
+//     console.log("THE USER WHO WROTE IT IS: " + result["user"]["login"]);
+// }));
 
-//console.log(github.issues.getRepoIssue("nejosephliu", "Test"));   
+
+// console.log(github.issues.repoIssues({user: "ayushajain", repo: "Butler", sort:"updated", direction: "asc"}, function(err, result){
+//     console.log(result);
+
+//     console.log("--------------");
+
+
+//     var counter = 0;
+//     while(true){
+//         //console.log("THE TITLE IS: " + the_title);
+//         var issue_object = result[counter];//["title"];
+//         if(issue_object == undefined){
+//             break;
+//         }else{
+//             console.log("ISSUE #: " + (counter + 1));
+//             console.log("THE TITLE IS: " + issue_object["title"]);
+//             console.log("THE BODY IS: " + issue_object["body"]);
+//             console.log("THE USER IS: " + issue_object["user"]["login"]);
+//             console.log("THE LINK IS: " + issue_object["url"]);
+//             console.log("THE NUMBER IS: " + issue_object["number"]);
+//         }
+
+//         console.log("---------------------")
+//         counter += 1;
+//     }
+    
+// }));
+
+
+
+// github.issues.repoIssues({user: "ButlerLAHacks", repo: "Test", sort:"updated", direction: "asc"}, function(err, result){
+//     //console.log(result);
+
+//     console.log("--------------");
+
+
+//     var counter = 0;
+//     while(true){
+//         //console.log("THE TITLE IS: " + the_title);
+//         var issue_object = result[counter];//["title"];
+//         if(issue_object == undefined){
+//             break;
+//         }else{
+//             console.log("ISSUE #: " + (counter + 1));
+//             console.log("THE TITLE IS: " + issue_object["title"]);
+//             console.log("THE BODY IS: " + issue_object["body"]);
+//             console.log("THE USER IS: " + issue_object["user"]["login"]);
+//             console.log("THE LINK IS: " + issue_object["url"]);
+//             console.log("THE NUMBER IS: " + issue_object["number"]);
+//         }
+
+//         console.log("---------------------")
+//         counter += 1;
+//     }
+    
+// });
+
+
+
