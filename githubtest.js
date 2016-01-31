@@ -89,11 +89,6 @@ function printRepoInfo(user, repo){
         console.log("---------------------");
     });
 
-<<<<<<< HEAD
-/*console.log(github.pullRequests.get({user: "ayushajain", repo: "Butler", number: 1}, function(err, result){
-    console.log(result);
-}));*/
-=======
 
     printBranchInfo("ayushajain", "Butler");
 
@@ -123,26 +118,12 @@ function printBranchInfo(user, repo){
         //console.log(result);
     });
 }
->>>>>>> test_branch
 
 
 /*console.log(github.repos.getCollaborators({user: "nejosephliu", repo: "Youth_Directory_Repo", number: 1}, function(err, result){
 	console.log(result);
 }));*/
 
-<<<<<<< HEAD
-
-
-
-//printRepoIssues("ButlerLAHacks", "Test");
-
-function printRepoIssues(user, repo){
-    github.issues.repoIssues({user: user, repo: repo, sort:"updated", direction: "asc"}, function(err, result){
-        console.log("--------------");
-
-
-        var counter = 0;
-=======
 // console.log(github.issues.getRepoIssue({user: "ayushajain", repo: "Butler", number: 1}, function(err, result){
 //     console.log("THE TITLE IS: " + result["title"]);
 //     console.log("THE BODY IS: " + result["body"]);
@@ -169,9 +150,6 @@ function printIssues(user, repo){
             if(issue_object == undefined){
                 break;
             }else{
-<<<<<<< HEAD
-                console.log("ISSUE #: " + (counter + 1));
-=======
                 console.log("ISSUE #: " + (counter));
 >>>>>>> test_branch
                 console.log("THE TITLE IS: " + issue_object["title"]);
@@ -181,9 +159,6 @@ function printIssues(user, repo){
                 console.log("THE NUMBER IS: " + issue_object["number"]);
             }
 
-<<<<<<< HEAD
-            console.log("---------------------")
-=======
             console.log("---------------------");
 >>>>>>> test_branch
             counter += 1;
@@ -191,9 +166,6 @@ function printIssues(user, repo){
         
     });
 }
-<<<<<<< HEAD
-=======
-
 
 >>>>>>> test_branch
 
