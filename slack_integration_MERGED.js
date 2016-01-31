@@ -140,7 +140,18 @@ function obeyCommand(text, channel, message) {
                               }
                          });
                          break;
-
+                    case "Cancel_Task":
+                         console.log(message.user);
+                         userRef.child('members').child(message.user).child('tasks').once('value',  function(snapshot) {
+                              var task = value["task"];
+                              snapshot.forEach(function(childSnapshot){
+                                   if(childSnapshot.val().task == task){
+                                        
+                                   }
+                              });
+                              
+                         });
+                         break;    
 
                          // case "Cancel_Task":
                          //
