@@ -18,7 +18,7 @@ var github = new GitHubApi({
 github.authenticate({
     type: "oauth",
     //token: "0e17a29b72a33ea4c99a8f9a5ae7f8e5c0b50425"
-    token: "2373d8ce59d93cdfc72926c8a0c470e68f09fe7b"
+    token: "51fad403c91a0a0b08319273467c8d41bf931338"
 });
 
 // console.log(github.issues.getAll({}, function(err, result){
@@ -30,7 +30,7 @@ github.authenticate({
 	console.log(result);
 }));*/
 
-console.log(github.issues.getComments({user: "ayushajain", repo: "Butler", number: 1}, function(err, result){
+console.log(github.issues.getRepoIssue({user: "ayushajain", repo: "Butler", number: 1}, function(err, result){
     console.log(result);
 }));
 
