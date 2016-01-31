@@ -20,13 +20,13 @@ github.authenticate({
     token: "0e17a29b72a33ea4c99a8f9a5ae7f8e5c0b50425"
 });
 
-console.log(github.issues.getAll({}, function(err, result){
-	console.log('The result is: ' + result);
-}));
+// console.log(github.issues.getAll({}, function(err, result){
+// 	console.log('The result is: ' + result);
+// }));
 
 
-/*console.log(github.issues.getRepoIssue({user: "ButlerLAHacks", repo: "Test", number: 1}, function(err, result){
+console.log(github.repos.getContributors({user: "ButlerLAHacks", repo: "Test", number: 1}, function(err, result){
 	console.log(result);
-}));*/
+}));
 
 //console.log(github.issues.getRepoIssue("nejosephliu", "Test"));
