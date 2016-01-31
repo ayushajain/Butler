@@ -1,7 +1,6 @@
 var Slack = require('slack-client');
 
 var wit = require('node-wit');
-var open = require('open');
 var nodemailer = require('nodemailer');
 
 var SLACK_TOKEN = 'xoxb-19889215429-MJPNMqleXI7RI8Dn24nEdrzd';
@@ -31,7 +30,7 @@ slack.on('message', function(message) {
      userName = (user != null ? user.name : void 0) != null ? "@" + user.name : "UNKNOWN_USER";
      console.log("Received: " + type + " " + channelName + " " + userName + " " + ts + " \"" + text + "\"");
 
-     getIntent(text);
+     obeyCommand(text, channel);
 });
 
 slack.on('error', function(err) {
@@ -41,41 +40,49 @@ slack.on('error', function(err) {
 slack.login();
 
 
-function getIntent(text){
-     wit.captureTextIntent(ACCESS_TOKEN, text, function (err, res) {
-         console.log("Response from Wit for text input: ");
-         if (err) console.log("Error: ", err);
-         console.log(JSON.stringify(res, null, " "));
-         var theIntent = JSON.stringify(res["outcomes"][0]["intent"]);
-         var theArgument = res["outcomes"][0]["entities"]["argument_text"][0]["value"]
+function getIntent(text, callback) {
+     wit.captureTextIntent(ACCESS_TOKEN, text, function(err, res) {
+          console.log("Response from Wit for text input: ");
+          if (err) console.log("Error: ", err);
+          console.log(JSON.stringify(res, null, " "));
+          var theIntent = JSON.stringify(res["outcomes"][0]["intent"]);
+          var theArgument = res["outcomes"][0]["entities"]["argument_text"][0]["value"]
 
-         obeyCommand(theIntent.substring(1, theIntent.length - 1), theArgument);
+          callback( [theIntent.substring(1, theIntent.length - 1), theArgument]);
      });
 }
 
-function obeyCommand(intent, value){
-     console.log("Intent: " + intent);
-     if(intent == "PrintText"){
-          console.log("Printing! " + value);
-     }else if(intent == "Google"){
-          console.log("Googlin' " + value);
-          open("http://www.google.com/#q=" + encodeURIComponent(value));
-     }else if(intent == "Send_Email"){
-          sendTheEmail(value, "test subject");
-     }
+function obeyCommand(text, channel) {
+     var rawIntent = getIntent(text, function(rawIntent) {
+          var value = rawIntent[1];
+          console.log("Intent: " + rawIntent[0]);
+          switch (rawIntent[0]) {
+               case "PrintText":
+                    console.log("Printing! " + value);
+                    channel.send(value);
+               case "Send_Email":
+                    sendTheEmail(value.replaceAll("<|>", ""), "test subject");
+          }
+     });
 }
 
-function sendTheEmail(recipient, subject){
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
+
+function sendTheEmail(recipient, subject) {
      var mailOptions = {
-     from: 'The Butler <butlerlahacks@gmail.com>', // sender address
-         to: recipient, // list of receivers
-         subject: 'Hello ✔', // Subject line
-         text: 'Hello world', // plaintext body
+          from: 'The Butler <butlerlahacks@gmail.com>', // sender address
+          to: recipient, // list of receivers
+          subject: 'Hello ✔', // Subject line
+          text: 'Hello world', // plaintext body
      };
 
-     transporter.sendMail(mailOptions, function(error, info){
-         if(error){
-             return console.log(error);
-         }
-         console.log('Message sent: ' + info.response);
-     });}
+     transporter.sendMail(mailOptions, function(error, info) {
+          if (error) {
+               return console.log(error);
+          }
+          console.log('Message sent: ' + info.response);
+     });
+}
