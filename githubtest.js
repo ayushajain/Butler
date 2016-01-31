@@ -92,7 +92,6 @@ function printRepoInfo(user, repo){
 
     printBranchInfo("ayushajain", "Butler");
 
-
 }
 
 function printBranchInfo(user, repo){
