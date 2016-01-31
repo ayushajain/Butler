@@ -1,6 +1,25 @@
 
 var GitHubApi = require("github");
 
+var fs = require("fs");
+
+var the_token;
+
+function setupGitID(callback){
+    fs.readFile("id.txt", function(err, data){
+        if(err){
+            console.error(err);
+        }
+        the_token = data.toString();
+        console.log(the_token);
+
+        callback();
+    })
+
+
+}
+
+
 var github = new GitHubApi({
     // required 
     version: "3.0.0",
@@ -15,11 +34,15 @@ var github = new GitHubApi({
     }
 });
 
-github.authenticate({
-    type: "oauth",
+setupGitID(function(){
+    github.authenticate({
+
+        type: "oauth",
+        token: the_token
     //token: "0e17a29b72a33ea4c99a8f9a5ae7f8e5c0b50425"
-    token: "51fad403c91a0a0b08319273467c8d41bf931338"
 });
+
+})
 
 // console.log(github.issues.getAll({}, function(err, result){
 // 	console.log('The result is: ' + result);
