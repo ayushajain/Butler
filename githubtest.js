@@ -41,12 +41,82 @@ setupGitID(function(){
 
 
 
+//printPullRequests("ayushajain", "Butler");
+
+function printPullRequests(user, repo){
+    console.log(github.pullRequests.getAll({user: user, repo: repo}, function(err, result){
+        console.log(result);
+        var counter = 0;
+
+        console.log("---------------------");
+
+        while(true){
+            var pull_object = result[counter];
+            if(pull_object == undefined){
+                break;
+            }else{
+                console.log("PULL REQUEST #: " + counter);
+                console.log("PULL USER: " + pull_object["user"]["login"]);
+                console.log("PULL URL: " + pull_object["url"]);
+                console.log("PULLING FROM: " + pull_object["head"]["ref"]);
+                console.log("PULLING TO: " + pull_object["base"]["ref"]);
+            }
+            counter++;
+
+            console.log("---------------------");
+        }
+        
+    }));
+}
 
 
+printRepoInfo("ayushajain", "Butler");
 
-console.log(github.pullRequests.get({user: "ayushajain", repo: "Butler", number: 1}, function(err, result){
-    console.log(result);
-}));
+function printRepoInfo(user, repo){
+    github.repos.get({user: user, repo: repo}, function(err, result){
+        console.log(result);
+
+        console.log("---------------------");
+
+        console.log("REPO NAME: " + result["name"]);
+        console.log("REPO OWNER: " + result["owner"]["login"]);
+        console.log("REPO URL: " + result["url"]);
+        console.log("REPO # OF OPEN ISSUES: " + result["open_issues"]);
+
+        //printBranchInfo("ayushajain", "Butler");
+
+        console.log("---------------------");
+    });
+
+
+    printBranchInfo("ayushajain", "Butler");
+
+
+}
+
+function printBranchInfo(user, repo){
+    github.repos.getBranches({user: user, repo: repo}, function(err, result){
+        var counter = 0;
+
+        console.log("---------------------");
+        
+        while(true){
+            if(result[counter] == undefined){
+                break;
+            }else{
+                console.log("BRANCH #: " + counter);
+                console.log("BRANCH NAME: " + result[counter]["name"]);
+                console.log("BRANCH URL: " + result[counter]["commit"]["url"]);
+            }
+
+            counter++;
+
+            console.log("---------------------");
+        }
+
+        //console.log(result);
+    });
+}
 
 
 /*console.log(github.repos.getCollaborators({user: "nejosephliu", repo: "Youth_Directory_Repo", number: 1}, function(err, result){
@@ -60,61 +130,39 @@ console.log(github.pullRequests.get({user: "ayushajain", repo: "Butler", number:
 // }));
 
 
-// console.log(github.issues.repoIssues({user: "ayushajain", repo: "Butler", sort:"updated", direction: "asc"}, function(err, result){
-//     console.log(result);
+//printIssues("ayushajain", "Butler");
 
-//     console.log("--------------");
+function printIssues(user, repo){
+    //github.issues.repoIssues({user: "ButlerLAHacks", repo: "Test", sort:"updated", direction: "asc"}, function(err, result){
+    github.issues.repoIssues({user: user, repo: repo, sort:"updated", direction: "asc"}, function(err, result){
+        //console.log(result);
 
-
-//     var counter = 0;
-//     while(true){
-//         //console.log("THE TITLE IS: " + the_title);
-//         var issue_object = result[counter];//["title"];
-//         if(issue_object == undefined){
-//             break;
-//         }else{
-//             console.log("ISSUE #: " + (counter + 1));
-//             console.log("THE TITLE IS: " + issue_object["title"]);
-//             console.log("THE BODY IS: " + issue_object["body"]);
-//             console.log("THE USER IS: " + issue_object["user"]["login"]);
-//             console.log("THE LINK IS: " + issue_object["url"]);
-//             console.log("THE NUMBER IS: " + issue_object["number"]);
-//         }
-
-//         console.log("---------------------")
-//         counter += 1;
-//     }
-    
-// }));
+        console.log("---------------------");
 
 
+        var counter = 0
+        ;
+        while(true){
+            //console.log("THE TITLE IS: " + the_title);
+            var issue_object = result[counter];//["title"];
+            if(issue_object == undefined){
+                break;
+            }else{
+                console.log("ISSUE #: " + (counter));
+                console.log("THE TITLE IS: " + issue_object["title"]);
+                console.log("THE BODY IS: " + issue_object["body"]);
+                console.log("THE USER IS: " + issue_object["user"]["login"]);
+                console.log("THE LINK IS: " + issue_object["url"]);
+                console.log("THE NUMBER IS: " + issue_object["number"]);
+            }
 
-// github.issues.repoIssues({user: "ButlerLAHacks", repo: "Test", sort:"updated", direction: "asc"}, function(err, result){
-//     //console.log(result);
+            console.log("---------------------");
+            counter += 1;
+        }
+        
+    });
+}
 
-//     console.log("--------------");
-
-
-//     var counter = 0;
-//     while(true){
-//         //console.log("THE TITLE IS: " + the_title);
-//         var issue_object = result[counter];//["title"];
-//         if(issue_object == undefined){
-//             break;
-//         }else{
-//             console.log("ISSUE #: " + (counter + 1));
-//             console.log("THE TITLE IS: " + issue_object["title"]);
-//             console.log("THE BODY IS: " + issue_object["body"]);
-//             console.log("THE USER IS: " + issue_object["user"]["login"]);
-//             console.log("THE LINK IS: " + issue_object["url"]);
-//             console.log("THE NUMBER IS: " + issue_object["number"]);
-//         }
-
-//         console.log("---------------------")
-//         counter += 1;
-//     }
-    
-// });
 
 
 
