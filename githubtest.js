@@ -17,7 +17,8 @@ var github = new GitHubApi({
 
 github.authenticate({
     type: "oauth",
-    token: "0e17a29b72a33ea4c99a8f9a5ae7f8e5c0b50425"
+    //token: "0e17a29b72a33ea4c99a8f9a5ae7f8e5c0b50425"
+    token: "2373d8ce59d93cdfc72926c8a0c470e68f09fe7b"
 });
 
 // console.log(github.issues.getAll({}, function(err, result){
@@ -25,8 +26,12 @@ github.authenticate({
 // }));
 
 
-console.log(github.repos.getContributors({user: "ButlerLAHacks", repo: "Test", number: 1}, function(err, result){
+/*console.log(github.repos.getCollaborators({user: "nejosephliu", repo: "Youth_Directory_Repo", number: 1}, function(err, result){
 	console.log(result);
+}));*/
+
+console.log(github.issues.getComments({user: "ayushajain", repo: "Butler", number: 1}, function(err, result){
+    console.log(result);
 }));
 
-//console.log(github.issues.getRepoIssue("nejosephliu", "Test"));
+//console.log(github.issues.getRepoIssue("nejosephliu", "Test"));   
