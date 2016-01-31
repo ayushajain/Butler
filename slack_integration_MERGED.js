@@ -11,6 +11,8 @@ var userRef;
 
 var butlerName = "butler";
 var IGNORE_USERS = ["slackbot", butlerName];
+var SELF_POSSESSIVE_WORDS = ["my", "myself", "mine"];
+
 var SLACK_TOKEN = 'xoxb-19889215429-MJPNMqleXI7RI8Dn24nEdrzd'; //change
 var SLACK_AUTORECONNECT = true;
 var SLACK_AUTOMARK = true;
@@ -75,7 +77,7 @@ slack.on('message', function(message) {
 });
 
 slack.on('error', function(err) {
-     console.log(error);
+     console.log(err);
 });
 
 slack.login();
@@ -100,6 +102,7 @@ function getIntent(text, callback) {
 }
 
 function obeyCommand(text, channel, message) {
+     console.log(message)
      var rawIntent = getIntent(text, function(rawIntent) {
           var value = rawIntent[1];
           console.log("Intent: " + rawIntent[0]);
@@ -127,9 +130,9 @@ function obeyCommand(text, channel, message) {
 
                               if (snapshot.hasChild(team)) {
                                    task["creator"] = message.user;
-                                   if(value["datetime"] != null){
+                                   if (value["datetime"] != null) {
                                         task["deadline"] = value["datetime"];
-                                   } 
+                                   }
                                    task["type"] = "user";
                                    task["user"] = team;
                                    task["key"] = userRef.child('members').child(team).child('tasks').push(task);
@@ -140,18 +143,61 @@ function obeyCommand(text, channel, message) {
                               }
                          });
                          break;
-                    case "Cancel_Task":
-                         console.log(message.user);
-                         userRef.child('members').child(message.user).child('tasks').once('value',  function(snapshot) {
-                              var task = value["task"];
-                              snapshot.forEach(function(childSnapshot){
-                                   if(childSnapshot.val().task == task){
+
+                    // case "Cancel_Task":
+                    //      console.log(message.user);
+                    //      userRef.child('members').child(message.user).child('tasks').once('value',  function(snapshot) {
+                    //           var task = value["task"];
+                    //           snapshot.forEach(function(childSnapshot){
+                    //                if(childSnapshot.val().task == task){
                                         
+                    //                }
+                    //           });
+                              
+                    //      });
+                    //      break;    
+
+                    case "List_Tasks":
+                         var member = slack.getUserByName(value["member"]);
+                         var output = "";
+                         userRef.child("members").child(member.id).child('tasks').once('value', function(snapshot) {
+                              var count = 1;
+                              snapshot.forEach(function(childSnapshot) {
+                                   var data = childSnapshot.val();
+                                   var creator = data.creator == message.user ? "you" : slack.getUserByID(data.creator).name;
+                                   output += "Task " + count + ": " + data.task + " (Assigned by " + creator + ")\n";
+
+                                   count++;
+                              });
+                              channel.send(output);
+                              if (output == "")
+                                   channel.send("No such user found.");
+                         });
+                    case "List_Members":
+                         var isTeam = value["team"] != null;
+
+                         var output = "";
+                         if (isTeam) {
+                              userRef.child('teams').once('value', function(snapshot) {
+                                   snapshot.forEach(function(childSnapshot) {
+                                        if (childSnapshot.val().name)
+                                             output += childSnapshot.val().name + ", ";
+                                   });
+                                   channel.send(output);
+                                   if(output == ""){
+                                        channel.send("No such team exits.");
                                    }
                               });
-                              
-                         });
-                         break;    
+                         } else {
+                              userRef.child('members').once('value', function(snapshot) {
+                                   snapshot.forEach(function(childSnapshot) {
+                                        if (childSnapshot.val().name)
+                                             output += childSnapshot.val().name + ", ";
+                                   });
+                                   channel.send(output);
+                              });
+                              break;
+                         }
 
                          // case "Cancel_Task":
                          //
@@ -169,7 +215,7 @@ function obeyCommand(text, channel, message) {
 
 function addTaskToGlobal(task) {
      task.key = task.key.toString().replaceAll(".*/", "");
-    userRef.child('tasks').child(task.key).set(task);
+     userRef.child('tasks').child(task.key).set(task);
 }
 
 String.prototype.replaceAll = function(search, replacement) {
