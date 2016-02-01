@@ -115,7 +115,7 @@ function obeyCommand(text, channel, message) {
                          channel.send(value["argument_text"]);
                          break;
                     case "Send_Email":
-                         sendTheEmail(value["argument_text"].replaceAll("<|>", ""), "test subject");
+                         sendTheEmail(value["email"].replaceAll("<|>", ""), "test subject");
                          break;
                     case "Date":
                          channel.send("Todays date is " + getDate() + ".");
@@ -161,6 +161,7 @@ function obeyCommand(text, channel, message) {
 
                               if (containsTask == true) {
                                    userRef.child('members').child(message.user).child('tasks').child(global_key).remove();
+                                   userRef.child('tasks').child(global_key).remove();
                                    channel.send("Task removed!");
                               } else {
                                    channel.send("Sorry, that task does not exist.");
@@ -176,15 +177,20 @@ function obeyCommand(text, channel, message) {
                               var count = 1;
                               snapshot.forEach(function(childSnapshot) {
                                    var data = childSnapshot.val();
-                                   var creator = data.creator == message.user ? "you" : slack.getUserByID(data.creator).name;
+                                   var creator = slack.getUserByID(data.creator).name;
                                    output += "Task " + count + ": " + data.task + " (Assigned by " + creator + ")\n";
 
                                    count++;
                               });
                               channel.send(output);
+<<<<<<< Updated upstream
                               if (output == "")
                                    channel.send("No such user found."); //PROBLEM: IF NO TASKS FOR LEGIT USER, IT STILL SAYS
                                                                            //NO USER FOUND.
+=======
+                              if (count == 1)
+                                   channel.send("This user currently has no tasks.");
+>>>>>>> Stashed changes
                          });
                          break;
                     case "List_Members":
