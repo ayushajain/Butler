@@ -151,7 +151,7 @@ function obeyCommand(text, channel, message) {
                          userRef.child('members').child(message.user).child('tasks').once('value', function(snapshot) {
                               var task = value["task"];
                               var containsTask = snapshot.forEach(function(childSnapshot) {
-                                   channel.send("Actual task: " + childSnapshot.val().task);
+                                   //channel.send("Actual task: " + childSnapshot.val().task);
                                    if (childSnapshot.val().task == task) {
                                         console.log("PARENT: " + JSON.stringify(childSnapshot.val()));
                                         global_key = childSnapshot.key();
@@ -183,7 +183,8 @@ function obeyCommand(text, channel, message) {
                               });
                               channel.send(output);
                               if (output == "")
-                                   channel.send("No such user found.");
+                                   channel.send("No such user found."); //PROBLEM: IF NO TASKS FOR LEGIT USER, IT STILL SAYS
+                                                                           //NO USER FOUND.
                          });
                          break;
                     case "List_Members":
