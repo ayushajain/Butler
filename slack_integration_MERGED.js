@@ -183,14 +183,11 @@ function obeyCommand(text, channel, message) {
                                    count++;
                               });
                               channel.send(output);
-<<<<<<< Updated upstream
                               if (output == "")
                                    channel.send("No such user found."); //PROBLEM: IF NO TASKS FOR LEGIT USER, IT STILL SAYS
                                                                            //NO USER FOUND.
-=======
                               if (count == 1)
                                    channel.send("This user currently has no tasks.");
->>>>>>> Stashed changes
                          });
                          break;
                     case "List_Members":
@@ -224,11 +221,11 @@ function obeyCommand(text, channel, message) {
                     case "Dank_Meme":
                          var randomVar = Math.random();
                          if(randomVar > 0.67){
-                              channel.send("Dank memes are bad. Learn how to be an anti-dank today!");
+                              channel.send("Bush did 9/11");
                          }else if(randomVar <= 0.33){
-                              channel.send("Keep your IQ points! Don't look up dank memes.");
+                              channel.send("Jet fuel can't melt steel beams");
                          }else{
-                              channel.send("Dankness is not a desirable quality. Say *_NO_* to dank memes.")
+                              channel.send("aylmaozedongerino")
                          }
                          break;
                          
@@ -247,6 +244,7 @@ function obeyCommand(text, channel, message) {
 function addTaskToGlobal(task) {
      task.key = task.key.toString().replaceAll(".*/", "");
      userRef.child('tasks').child(task.key).set(task);
+     
 }
 
 String.prototype.replaceAll = function(search, replacement) {
