@@ -224,9 +224,7 @@ function obeyCommand(text, channel, message) {
                               channel.send("Dankness is not a desirable quality. Say *_NO_* to dank memes.")
                          }
                          break;
-
-                         // case "Cancel_Task":
-                         //
+                         
                          // case "Get_Issues":
                          //
                          // case "Get_Status":
