@@ -185,6 +185,7 @@ function obeyCommand(text, channel, message) {
                               if (output == "")
                                    channel.send("No such user found.");
                          });
+                         break;
                     case "List_Members":
                          var isTeam = value["team"] != null;
 
@@ -212,6 +213,16 @@ function obeyCommand(text, channel, message) {
                          break;
                     case "Create_Team":
 
+                         break;
+                    case "Dank_Meme":
+                         var randomVar = Math.random();
+                         if(randomVar > 0.67){
+                              channel.send("Dank memes are bad. Learn how to be an anti-dank today!");
+                         }else if(randomVar <= 0.33){
+                              channel.send("Keep your IQ points! Don't look up dank memes.");
+                         }else{
+                              channel.send("Dankness is not a desirable quality. Say *_NO_* to dank memes.")
+                         }
                          break;
 
                          // case "Cancel_Task":
