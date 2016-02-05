@@ -1,0 +1,28 @@
+{
+  "name": "butler",
+  "version": "1.0.0",
+  "description": "An intelligent bot that manages teams and projects through Github, Slack and Trello.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ayushajain/Butler.git"
+  },
+  "keywords": [
+    "bot",
+    "Slack",
+    "slackbot",
+    "project",
+    "project-manager",
+    "github",
+    "team-management"
+  ],
+  "author": "Ayush Jain <ayush@techlabeducation.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ayushajain/Butler/issues"
+  },
+  "homepage": "https://github.com/ayushajain/Butler#readme"
+}
